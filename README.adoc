@@ -1,0 +1,7 @@
+== ビルド用の環境構築
+
+[source, shell]
+----
+gem install asciidoctor asciidoctor-diagram 
+npm install -g wavedrom-cli bytefield-svg
+----

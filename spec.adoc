@@ -1,0 +1,72 @@
+== CPU仕様
+
+=== 命令フォーマット
+
+.即値形式
+[wavedrom, ,svg]
+....
+{reg: [
+  {bits:  5, name: 'opcode'},
+  {bits:  3, name: 'opcode_sub'},
+  {bits:  5, name: 'rd'},
+  {bits:  3, name: 'rs1'},
+  {bits: 32, name: 'imm'},
+], config: {hspace: 1024}}
+....
+
+[bytefield]
+----
+
+----
+
+.レジスタ形式
+[wavedrom, ,svg]
+....
+{reg: [
+  {bits:  5, name: 'opcode'},
+  {bits:  3, name: 'opcode_sub'},
+  {bits:  5, name: 'rd'},
+  {bits:  5, name: 'rs1'},
+  {bits:  5, name: 'rs2'},
+  {bits: 25, name: 'reserved'},
+], config: {hspace: 1024}}
+....
+
+
+=== 命令一覧
+
+[options="header"]
+|===
+      | OpCode | OpCodeSub | Inst | Kind | Description
+.2+^.^| 00001  | 001       | add  | R    | 足し算
+               | xxx       | xxx  | x    | XXXX
+|===
+
+
+
+== 命令説明
+
+=== 00001
+
+==== 概要
+
+基本算術命令
+
+==== 命令
+
+* add(001) : レジスタ `rs1` と `rs2` の値を足しわせた結果をレジスタ `rd` に保存する ⇒ `rd = rs1 + rs2`
+
+
+== 用語説明
+
+[options="header"]
+|===
+| yogo          | setsumei
+| opcode        | Operation Code の略。命令の識別番号。
+| opcode_sub    | opcode による命令識別の補助。
+| rd            | Register Destination の略。命令の結果を格納するレジスタのアドレスを指す。
+| rs1, rs2      | Register Source の略。参照するレジスタのアドレスを指す。
+| imm           | Immediate の略。即値。そのまま渡したい数値。
+| reserved      | データの空き地。
+| yogo          | setsumei
+|===
