@@ -52,6 +52,20 @@
 
 * addi(001) : レジスタ `rs1` と 即値 `imm` の値を足しわせた結果をレジスタ `rd` に保存する ⇒ `rd = rs1 + imm`
 
+=== 分岐命令
+
+==== 00011
+
+* beq(000) : レジスタ `rs1` と `rs2` の値が等しい場合、現在の `pc` をレジスタ `rd` に書き込み、即値 `imm` だけ pc を進める ⇒ `if (rs1 == rs2) { rd = pc; pc += sext(imm); }`
+** sext(imm) : 即値 `imm` を符号拡張する
+** 等しくなかった場合は何もせず次の命令へ進む
+
+* bne(001) : レジスタ `rs1` と `rs2` の値が等しくない場合、現在の `pc` をレジスタ `rd` に書き込み、即値 `imm` だけ pc を進める ⇒ `if (rs1 != rs2) { rd = pc; pc += sext(imm); }`
+
+* blt(010) : レジスタ `rs1` の値が `rs2` の値より小さい場合、現在の `pc` をレジスタ `rd` に書き込み、即値 `imm` だけ pc を進める ⇒ `if (rs1 < rs2) { rd = pc; pc += sext(imm); }`
+
+* ble(011) : レジスタ `rs1` の値が `rs2` の値以下の場合、現在の `pc` をレジスタ `rd` に書き込み、即値 `imm` だけ pc を進める ⇒ `if (rs1 <= rs2) { rd = pc; pc += sext(imm); }`
+
 == 用語説明
 
 [options="header"]
@@ -63,5 +77,8 @@
 | rs1, rs2      | Register Source の略。参照するレジスタのアドレスを指す。
 | imm           | Immediate の略。即値。そのまま渡したい数値。
 | reserved      | データの空き地。
+| pc            | Program Counter の略。現在実行している命令のメモリのアドレス。
+| yogo          | setsumei
+| yogo          | setsumei
 | yogo          | setsumei
 |===
