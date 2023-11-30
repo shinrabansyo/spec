@@ -2,7 +2,7 @@
 
 === 命令フォーマット
 
-.即値形式
+.即値形式(I形式)
 [wavedrom, ,svg]
 ....
 {reg: [
@@ -14,7 +14,19 @@
 ], config: {hspace: 1024}}
 ....
 
-.レジスタ形式
+.ストア形式(S形式)
+[wavedrom, ,svg]
+....
+{reg: [
+  {bits:  5, name: 'opcode'},
+  {bits:  3, name: 'opcode_sub'},
+  {bits:  5, name: 'rs2'},
+  {bits:  3, name: 'rs1'},
+  {bits: 32, name: 'imm'},
+], config: {hspace: 1024}}
+....
+
+.レジスタ形式(R形式)
 [wavedrom, ,svg]
 ....
 {reg: [
@@ -34,7 +46,24 @@
 |===
       | OpCode | OpCodeSub | Inst | Kind | Description
 .2+^.^| 00001  | 001       | add  | R    | 足し算
+               | 010       | sub  | R    | 引き算(未実装)
 .2+^.^| 00010  | 001       | addi | I    | 足し算
+               | 010       | subi | I    | 引き算(未実装)
+.4+^.^| 00011  | 000       | beq  | R    | branch if equal
+               | 001       | bne  | R    | branch if not equal(未実装)
+               | 010       | blt  | R    | branch if less than(未実装)
+               | 011       | ble  | R    | branch if less than or equal(未実装)
+.5+^.^| 00100  | 000       |  lw  | I    | 32bit load
+               | 001       |  lh  | I    | 16bit load(未実装)
+               | 010       |  lb  | I    | 8bit load(未実装)
+               | 011       | lhu  | I    | 16bit load unsigned(未実装)
+               | 100       | lbu  | I    | 8bit load unsigned(未実装)
+.3+^.^| 00101  | 000       |  sw  | S    | 32bit store
+               | 001       |  sh  | S    | 16bit store(未実装)
+               | 010       |  sb  | S    | 8bit store(未実装)
+.4+^.^| xxxxx  | 000       | xxx  | x    | xxxx
+               | xxx       | xxx  | x    | XXXX
+               | xxx       | xxx  | x    | XXXX
                | xxx       | xxx  | x    | XXXX
 |===
 
@@ -82,11 +111,11 @@
 
 ==== 00101
 
-* sw(000) : レジスタ `rs1` と 即値 `imm` の値を足しわせたアドレスにレジスタ `rs2` の値を書き込む ⇒ `mem[rs1 + imm][31:0] = rs2`
+* sw(000) : レジスタ `rs1` と 即値 `imm` の値を足しわせたアドレスにレジスタ `rs2` の値を書き込む ⇒ `mem[x[rs1] + imm][31:0] = rs2`
 
-* sh(001) : レジスタ `rs1` と 即値 `imm` の値を足しわせたアドレスにレジスタ `rs2` の値を書き込む ⇒ `mem[rs1 + imm][15:0] = rs2`
+* sh(001) : レジスタ `rs1` と 即値 `imm` の値を足しわせたアドレスにレジスタ `rs2` の値を書き込む ⇒ `mem[x[rs1] + imm][15:0] = rs2`
 
-* sb(010) : レジスタ `rs1` と 即値 `imm` の値を足しわせたアドレスにレジスタ `rs2` の値を書き込む ⇒ `mem[rs1 + imm][7:0] = rs2`
+* sb(010) : レジスタ `rs1` と 即値 `imm` の値を足しわせたアドレスにレジスタ `rs2` の値を書き込む ⇒ `mem[x[rs1] + imm][7:0] = rs2`
 
 == 用語説明
 
