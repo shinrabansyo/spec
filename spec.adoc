@@ -62,10 +62,8 @@
 .3+^.^| 00101  | 000       |  sw  | S    | 32bit store
                | 001       |  sh  | S    | 16bit store(未実装)
                | 010       |  sb  | S    | 8bit store(未実装)
-.4+^.^| xxxxx  | 000       | xxx  | x    | xxxx
-               | xxx       | xxx  | x    | XXXX
-               | xxx       | xxx  | x    | XXXX
-               | xxx       | xxx  | x    | XXXX
+.2+^.^| 00110  | 000       |  in  | I    | in
+               | 001       | out  | S    | out
 |===
 
 
@@ -122,20 +120,43 @@
 
 * sb(010) : レジスタ `rs1` と 即値 `imm` の値を足しわせたアドレスにレジスタ `rs2` の値を書き込む ⇒ `mem[x[rs1] + imm][7:0] = rs2`
 
+==== 00110
+
+* in(000) : レジスタ `rs1` と即値 `imm` の値を足し合わせた結果をデバイス ID とし，そのデバイスからデータをレジスタ `rd` に読み込む ⇒ `rd = in(x[rs1] + imm)`
+
+* out(001) : レジスタ `rs1` と即値 `imm` の値を足し合わせた結果をデバイス ID とし，そのデバイスにレジスタ `rs2` の値を書き込む ⇒ `out(x[rs1] + imm, rs2)`
+
 == 用語説明
 
 [options="header"]
 |===
-| yogo          | setsumei
-| nop           | no operation の略。何もしない。
-| opcode        | Operation Code の略。命令の識別番号。
-| opcode_sub    | opcode による命令識別の補助。
-| rd            | Register Destination の略。命令の結果を格納するレジスタのアドレスを指す。
-| rs1, rs2      | Register Source の略。参照するレジスタのアドレスを指す。
-| imm           | Immediate の略。即値。そのまま渡したい数値。
-| reserved      | データの空き地。
-| pc            | Program Counter の略。現在実行している命令のメモリのアドレス。
-| rs1[2:0]      | rs1は箱として5bit分(r0～r31)存在するが、その内の3bit分(r0～r7)を指定できるということ(※32コの箱の内、8コの箱を持ってこれる)
-| yogo          | setsumei
-| yogo          | setsumei
+| 用語             | 説明
+| nop              | no operation の略。何もしない。
+| opcode           | Operation Code の略。命令の識別番号。
+| opcode_sub       | opcode による命令識別の補助。
+| rd               | Register Destination の略。命令の結果を格納するレジスタのアドレスを指す。
+| rs1, rs2         | Register Source の略。参照するレジスタのアドレスを指す。
+| imm              | Immediate の略。即値。そのまま渡したい数値。
+| reserved         | データの空き地。
+| pc               | Program Counter の略。現在実行している命令のメモリのアドレス。
+| rs1[2:0]         | rs1は箱として5bit分(r0～r31)存在するが、その内の3bit分(r0～r7)を指定できるということ(※32コの箱の内、8コの箱を持ってこれる)
+| デバイスID       | CPU に接続されている周辺機器(=デバイス)の識別番号(in/out命令でデバイスを指定して命令)
+| UART             | 同期式シリアル通信を行う規格，UART(Universal Asynchronous Receiver Transmitter)
+| クロックカウンタ | CPUと同じクロックを使ってカウントアップするカウンタ。クロック周波数を知っていれば時間を計測できる。
+| yogo             | setsumei
 |===
+
+
+== デバイス
+
+[options="header"]
+|===
+| デバイスID    | デバイスの種類
+| 0x00000000    | UART
+| 0x00000001    | クロックカウンタ（タイマー）
+| 0x00000002    | XXXX
+|===
+
+* 存在しないデバイスIDを指定したとき
+** 読み込みの場合、無効なデータ 0 を読み出す
+** 書き込みの場合、何もしない
