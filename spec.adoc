@@ -50,10 +50,11 @@
                | 010       | sub  | R    | 引き算
 .2+^.^| 00010  | 001       | addi | I    | 足し算
                | 010       | subi | I    | 引き算
-.4+^.^| 00011  | 000       | beq  | R    | branch if equal
+.5+^.^| 00011  | 000       | beq  | R    | branch if equal
                | 001       | bne  | R    | branch if not equal
                | 010       | blt  | R    | branch if less than (signed)
                | 011       | ble  | R    | branch if less than or equal (signed)
+               | 100       | jal  | I    | jump and link
 .5+^.^| 00100  | 000       |  lw  | I    | 32bit load
                | 001       |  lh  | I    | 16bit load(未実装)
                | 010       |  lb  | I    | 8bit load(未実装)
@@ -97,6 +98,8 @@
 * blt(010) : レジスタ `rs1` の値が `rs2` の値未満（符号付き比較）の場合、現在の `pc` + 6 をレジスタ `rd` に書き込み、即値 `imm` だけ pc を進める ⇒ `if (rs1 < rs2) { rd = pc + 6; pc += sext(imm); }`
 
 * ble(011) : レジスタ `rs1` の値が `rs2` の値以下（符号付き比較）の場合、現在の `pc` + 6 をレジスタ `rd` に書き込み、即値 `imm` だけ pc を進める ⇒ `if (rs1 <= rs2) { rd = pc + 6; pc += sext(imm); }`
+
+* jal(100) : `rs1 + `imm` を `pc` に設定し、現在の `pc` + 6 をレジスタ `rd` に書き込む ⇒ `rd = pc + 6; pc = rs1 + imm;`
 
 === メモリアクセス命令
 
