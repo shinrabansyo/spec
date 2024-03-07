@@ -17,6 +17,7 @@
 .ストア形式(S形式)
 [wavedrom, ,svg]
 ....
+
 {reg: [
   {bits:  5, name: 'opcode'},
   {bits:  3, name: 'opcode_sub'},
@@ -99,7 +100,7 @@
 
 * ble(011) : レジスタ `rs1` の値が `rs2` の値以下（符号付き比較）の場合、現在の `pc` + 6 をレジスタ `rd` に書き込み、即値 `imm` だけ pc を進める ⇒ `if (rs1 <= rs2) { rd = pc + 6; pc += sext(imm); }`
 
-* jal(100) : `rs1 + `imm` を `pc` に設定し、現在の `pc` + 6 をレジスタ `rd` に書き込む ⇒ `rd = pc + 6; pc = rs1 + imm;`
+* jal(100) : `rs1` + `imm` を `pc` に設定し、現在の `pc` + 6 をレジスタ `rd` に書き込む ⇒ `rd = pc + 6; pc = rs1 + imm;`
 
 === メモリアクセス命令
 
