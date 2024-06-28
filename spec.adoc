@@ -40,6 +40,18 @@
 ], config: {hspace: 1024}}
 ....
 
+.分岐形式(B形式)
+[wavedrom, ,svg]
+....
+{reg: [
+  {bits:  5, name: 'opcode'},
+  {bits:  3, name: 'opcode_sub'},
+  {bits:  5, name: 'rd'},
+  {bits:  5, name: 'rs1'},
+  {bits:  5, name: 'rs2'},
+  {bits: 25, name: 'imm'},
+], config: {hspace: 1024}}
+....
 
 === 命令一覧
 
@@ -51,10 +63,10 @@
                | 010       | sub  | R    | 引き算
 .2+^.^| 00010  | 001       | addi | I    | 足し算
                | 010       | subi | I    | 引き算
-.5+^.^| 00011  | 000       | beq  | R    | branch if equal
-               | 001       | bne  | R    | branch if not equal
-               | 010       | blt  | R    | branch if less than (signed)
-               | 011       | ble  | R    | branch if less than or equal (signed)
+.5+^.^| 00011  | 000       | beq  | B    | branch if equal
+               | 001       | bne  | B    | branch if not equal
+               | 010       | blt  | B    | branch if less than (signed)
+               | 011       | ble  | B    | branch if less than or equal (signed)
                | 100       | jal  | I    | jump and link
 .5+^.^| 00100  | 000       |  lw  | I    | 32bit load
                | 001       |  lh  | I    | 16bit load(未実装)
