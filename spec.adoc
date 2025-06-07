@@ -70,23 +70,25 @@
                | 010       | blt  | B    | branch if less than (signed)
                | 011       | ble  | B    | branch if less than or equal (signed)
                | 100       | jal  | I    | jump and link
-.5+^.^| 00100  | 000       |  lw  | I    | 32bit load
+.6+^.^| 00100  | 000       |  lw  | I    | 32bit load
                | 001       |  lh  | I    | 16bit load
                | 010       |  lb  | I    | 8bit load
                | 011       | lhu  | I    | 16bit load unsigned
                | 100       | lbu  | I    | 8bit load unsigned
-.3+^.^| 00101  | 000       |  sw  | S    | 32bit store
+               | 101       |(ilb )| I    | (予約領域) 8bit load (命令メモリ)
+.4+^.^| 00101  | 000       |  sw  | S    | 32bit store
                | 001       |  sh  | S    | 16bit store
                | 010       |  sb  | S    | 8bit store
+               | 011       | isb  | S    | 8bit store (命令メモリ)
 .2+^.^| 00110  | 000       |  in  | I    | in
                | 001       | out  | S    | out
-.3+^.^| 00111  | 000       | and  | R    | AND 演算
+.6+^.^| 00111  | 000       | and  | R    | AND 演算
                | 001       | or   | R    | OR 演算
                | 010       | xor  | R    | XOR 演算
                | 011       | srl  | R    | 右論理シフト
                | 100       | sra  | R    | 右算術シフト
                | 101       | sll  | R    | 左論理シフト
-.3+^.^| 01000  | 000       | andi | I    | AND 演算
+.6+^.^| 01000  | 000       | andi | I    | AND 演算
                | 001       | ori  | I    | OR 演算
                | 010       | xori | I    | XOR 演算
                | 011       | srli | I    | 右論理シフト
